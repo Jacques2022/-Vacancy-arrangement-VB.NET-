@@ -1,0 +1,48 @@
+' 求给定数组，n个元素进行组合的枚举结果。                                                                                                                                               
+'  n=1时，组合个数为1，如：a；                                                                                                                                                          
+'  n=2时，组合个数为2，如：ab；                                                                                                                                                         
+'  n=3时，组合个数为3，如：abc；                                                                                                                                                        
+Function Comb(ByVal arr As List(Of String), ByVal n As Integer) As List(Of String)                                                                                                      
+    Dim newArray As List(Of String) = New List(Of String)                                                                                                                               
+    If n = 1 Then                                                                                                                                                                       
+        newArray = arr                                                                                                                                                                  
+    ElseIf n = 2 Then                                                                                                                                                                   
+        For i As Integer = 0 To arr.Count - 1                                                                                                                                           
+            For j As Integer = i + 1 To arr.Count - 1                                                                                                                                   
+                newArray.Add(arr(i) & "&" & arr(j))                                                                                                                                     
+            Next                                                                                                                                                                        
+        Next                                                                                                                                                                            
+    Else                                                                                                                                                                                
+        Dim str As String = ""                                                                                                                                                          
+        For i As Integer = 0 To arr.Count - 1                                                                                                                                           
+            str = arr(i)                                                                                                                                                                
+            Dim tempArr As List(Of String) = New List(Of String)                                                                                                                        
+            For j As Integer = i + 1 To arr.Count - 1                                                                                                                                   
+                                                                                                                                                                                        
+                tempArr.Add(arr(j))                                                                                                                                                     
+            Next                                                                                                                                                                        
+            If tempArr.Count < n - 1 Then                                                                                                                                               
+                                                                                                                                                                                        
+                Exit For                                                                                                                                                                
+            End If                                                                                                                                                                      
+            Dim arr1 As List(Of String) = Comb(tempArr, n - 1)                                                                                                                          
+            For Each strTemp As String In arr1                                                                                                                                          
+                newArray.Add(str & "&" & strTemp)                                                                                                                                       
+            Next                                                                                                                                                                        
+        Next                                                                                                                                                                            
+    End If                                                                                                                                                                              
+    Return newArray                                                                                                                                                                     
+End Function                                                                                                                                                                            
+                                                                                                                                                                                        
+Sub Main()                                                                                                                                                                              
+    '使用例：                                                                                                                                                                           
+    '构造一个数组：                                                                                                                                                                     
+    Dim arrList As List(Of String) = New List(Of String) From {"a", "b", "c"}                                                                                                           
+    For i As Integer = 1 To arrList.Count                                                                                                                                               
+        Dim lstResult As List(Of String) = Comb(arrList, i)                                                                                                                             
+        For Each str As String In lstResult                                                                                                                                             
+            Console.WriteLine(str)                                                                                                                                                      
+        Next                                                                                                                                                                            
+    Next                                                                                                                                                                                
+    Console.Read()                                                                                                                                                                      
+End Sub                                                                                                                                                                                 
